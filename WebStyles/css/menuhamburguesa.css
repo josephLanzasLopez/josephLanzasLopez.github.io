@@ -1,0 +1,50 @@
+/* Estilos para el menú hamburguesa */
+.sidebar-toggler {
+    display: inline-block;
+    cursor: pointer;
+}
+
+    .sidebar-toggler .fa-bars {
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+.navbar-nav .nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-nav .nav-item.dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #242424;
+    border: none;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.navbar-nav .dropdown-item {
+    color: #fff;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+    .navbar-nav .dropdown-item:hover {
+        background-color: #444;
+    }
+
+#menuDropdown::after {
+    content: "\f078";
+    font-family: FontAwesome;
+    margin-left: 10px;
+}
+
+#menuDropdown.open::after {
+    content: "\f077";
+}

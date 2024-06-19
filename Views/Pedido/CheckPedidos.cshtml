@@ -1,0 +1,153 @@
+﻿@model IEnumerable<LN_WEB.Entities.PedidoEnt>
+@{
+    ViewBag.Title = "CheckPedidos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <h3 style="font-family: 'Lobster', cursive; color: #F28123; ">La Catrina</h3>
+                    <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Mis Pedidos</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <table id="showData" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>N. Pedido</th>
+                <th>N. Factura</th>
+                <th>Usuario</th>
+                <th>Total</th>
+                <th>Fecha</th>
+                <th>Para Llevar?</th>
+                <th>Nota</th>
+                <th>Estado</th>
+                <th>Editar Estado</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="user-row">
+                    <td>@item.OrderId</td>
+                    <td>@item.FacturaId</td>
+                    <td>@item.NombreUsuario</td>
+                    <td>@item.Total</td>
+                    <td>@item.Fecha</td>
+                    <td style="color:coral">@(item.ParaLlevar ? "✓" : "✗")</td>
+                    <td>@item.Nota</td>
+
+                    <td>
+                        @if (item.Estado == true)
+                        {
+                            <p>Activo</p>
+                        }
+                        else
+                        {
+                            <p>Inactivo</p>
+                        }
+                    </td>
+                    <td><a href="@Url.Action("Editar","Pedido", new { q = item.OrderId })"><i class="fa fa-pen" style="color: grey"></i></a></td>
+                    <td><button type="button" class="btn" onclick="RemoverPedido(@item.OrderId, this)"><i class="fa fa-trash"></i></button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+    window.onload = function () {
+        AddTotal();
+
+    }
+
+    function RemoverPedido(OrderId, element) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminarlo',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, procedemos con la eliminación
+                $.ajax({
+                    type: "POST",
+                    url: "/Pedido/RemoverPedido",
+                    dataType: "json",
+                    data: {
+                        "q": OrderId
+                    },
+                    success: function (respuesta) {
+                        // Mostrar mensaje de éxito o redirigir a la página de consulta
+                        Swal.fire(
+                            'Eliminado',
+                            'El Pedido ha sido eliminado correctamente',
+                            'success'
+                        ).then((result) => {
+                            // Redirigir a la página de consulta de usuarios
+                            window.location.href = "/Pedido/CheckPedidos";
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.fire(
+                            'Error',
+                            'Hubo un error al eliminar el usuario',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+
+</script>
+
+
+<style>
+    /* Estilos para la tabla */
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1rem;
+        background-color: transparent;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        /* Estilos para las celdas de la tabla */
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: middle; /* Alinea verticalmente el contenido */
+            border-top: 1px solid #dee2e6;
+            text-align: center; /* Centra el contenido horizontalmente */
+        }
+
+    /* Estilos para las filas pares */
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Estilos para las filas al pasar el ratón */
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+    }
+</style>
+
+
+
+

@@ -1,0 +1,75 @@
+﻿@model LN_WEB.Entities.ReservationEnt
+
+@{
+    ViewBag.Title = "Reservar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row h-100 align-items-center justify-content-center">
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <h3 style="font-family: 'Lobster', cursive; color: #F28123; ">La Catrina</h3>
+                    <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Reservación de Mesa</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br /> <br />
+    <br /> <br />
+    <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-5 mx-auto">
+
+        @if (ViewBag.GoodMsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-success" role="alert">
+                @ViewBag.GoodMsjPantalla
+            </div>
+        }
+        @if (ViewBag.MsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                @ViewBag.MsjPantalla
+            </div>
+        }
+        @using (Html.BeginForm("RegisterReservation", "Reservation", FormMethod.Post, new { enctype = "multipart/form-data", id = "formReservation", onsubmit = "return validarFormulario(event);" }))
+        {
+            <div class="form-floating mb-3">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Nombre", id = "Nombre" })
+                <label for="floatingInput">Nombre</label>
+            </div>
+            <div class="form-floating mb-3">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Teléfono", id = "Telefono" })
+                <label for="floatingInput">Teléfono</label>
+            </div>
+            <div class="form-floating mb-3">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Correo Electrónico", id = "Correo" })
+                <label for="floatingInput">Correo Electrónico</label>
+            </div>
+            <div class="form-floating mb-3">
+                @Html.TextBoxFor(m => m.DateReservation, new { @class = "form-control", @type = "date", id = "Date" })
+                <label for="floatingInput">Fecha de Reserva</label>
+            </div>
+            <div class="form-floating mb-3">
+                @Html.TextBoxFor(m => m.NumberPeople, new { @class = "form-control", @placeholder = "Número de Personas", id = "NumeroPersonas" })
+                <label for="floatingInput">Número de Personas</label>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-success py-3 w-100 mb-4">Reservar</button>
+        }
+
+    </div>
+</div>
+
+
+<script src="~/Scripts/ReservaScript.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+

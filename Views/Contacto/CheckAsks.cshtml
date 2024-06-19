@@ -1,0 +1,97 @@
+﻿@model IEnumerable<LN_WEB.Entities.AskEnt>
+
+@{
+    ViewBag.Title = "CheckAsks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="breadcrumb-text text-center mb-4">
+            <h3>EL VARON</h3>
+            <p>Mis Consultas</p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+
+        @if (ViewBag.MsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                @ViewBag.MsjPantalla
+            </div>
+        }
+
+    <table class="table table-bordered" id="usersTable">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Tipo de pregunta</th>
+                <th>Mensaje</th>
+                <th>Eliminar</th>
+            </tr>
+        <thead>
+        <tbody id="searchResults" style="background-color: #dbd9d5; ">
+            @foreach (var item in Model)
+            {
+                <tr class="user-row">
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Phone</td>
+                    <td>@item.TypeAsk</td>
+                    <td>@item.Message</td>
+                    <td><button type="button" class="btn" onclick="RemoveAsk(@item.IdAsk, this)"><i class="fa fa-trash" style="color:grey"></i></button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+    function RemoveAsk(IdAsk, element) {
+        Swal.fire({
+            title: '¿Estás seguro que desea eliminar?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminarlo',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Contacto/RemoveAsk",
+                    dataType: "json",
+                    data: {
+                        "q": IdAsk
+                    },
+                    success: function (respuesta) {
+                        Swal.fire(
+                            'Eliminado',
+                            'La consulta ha sido eliminada correctamente',
+                            'success'
+                        ).then((result) => {
+                            window.location.href = "/Contacto/CheckAsks";
+                        });
+                    },
+                    error: function (error) {
+                        Swal.fire(
+                            'Error',
+                            'Hubo un error al eliminar la consulta',
+                            'error'
+                        );
+                        console.error("Error en la llamada AJAX:", error);
+                    }
+                });
+            }
+        });
+    }
+</script>

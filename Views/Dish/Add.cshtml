@@ -1,0 +1,46 @@
+﻿@model LN_WEB.Entities.DishEnt
+
+@{
+    ViewBag.Title = "Add Dish";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("AddDish", "Dish", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="row">
+            <div class="breadcrumb-text text-center mb-4">
+
+                <h3>EL VARON</h3>
+                <p>Registrar Plato</p>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-center justify-content-center">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-5">
+
+            <div class="form-floating mb-3">
+                <input type="file" id="ImageDish" name="ImageDish" class="form-control" accept="image/png">
+            </div>
+
+            <div class="form-floating mb-3">
+                 @Html.TextBoxFor(m => m.Name, new { @type = "text", @class = "form-control", placeholder = "Name", id= "Name"})
+            <label for="floatingInput">Nombre</label>
+            </div>
+            <div class="form-floating mb-3">
+                @Html.TextBoxFor(m => m.Ingredients, new { @type = "text", @class = "form-control", @placeholder = "Ingredients", id="Ingredients"})
+            <label for="floatingInput">Ingredientes</label>
+            </div>
+            <div class="form-floating mb-3">
+                 @Html.TextBoxFor(m => m.Price, new { @type = "number", @class = "form-control", @placeholder = "Precio", id="Price" })
+            <label for="floatingInput">Precio</label>
+            </div>
+
+            <button type="submit" class="btn btn-warning py-3 w-100 mb-4">Agregar</button>
+
+        </div>
+    </div>
+}
+

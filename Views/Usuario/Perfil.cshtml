@@ -1,0 +1,63 @@
+﻿@model LN_WEB.Entities.UsuarioEnt
+
+@{
+    ViewBag.Title = "Perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<section class="profile">
+    <div class="user-content">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <h3 style="font-family:  cursive; ">@Session["NombreUsuario"].ToString() </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </br>
+
+        <div class="user-image">
+            <img src="@Session["ImageUsuario"]" width="150" height="150" />
+        </div>
+        <div class="user-info">
+            <form id="profile-form">
+                <h4 class="d-none d-lg-inline-flex">@Session["NombreRolUsuario"].ToString() </h4> <br>
+
+                <h4 class="d-none d-lg-inline-flex"> @Session["CorreoUsuario"].ToString() </h4> 
+
+            </form>
+        </div>
+        <div class="buttons">
+            <section style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+
+                <a href="@Url.Action("CheckMyDishes","Dish")">
+                    <button type="button" class="btn btn-outline-light" style="color: #F28123; border-color: #F28123;">Historial de Pedidos</button>
+                </a>
+
+                <a href="@Url.Action("VerFacturasUsuario", "Factura", new { userId = long.Parse(Session["IdUsuario"].ToString()) })">
+                    <button type="button" class="btn btn-outline-light" style="color: #F28123; border-color: #F28123;"">Facturas</button>
+                </a>
+
+                <a href="@Url.Action("CheckMyReservations","Reservation")">
+                    <button type="button" class="btn btn-outline-light" style="color: #F28123; border-color: #F28123;"">Mis Reservaciones</button>
+                </a>
+
+                <a href="@Url.Action("Cambiar","Home")">
+                    <button type="button" class="btn btn-outline-light" style="color: #F28123; border-color: #F28123;">Cambiar Contraseña</button>
+
+                </a>
+
+            </section>
+        </div>
+    </div>
+</section>
+
+
+
+

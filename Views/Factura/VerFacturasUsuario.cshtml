@@ -1,0 +1,32 @@
+@model List<LN_WEB.Entities.FacturaEnt>
+
+<h2>Facturas del Usuario</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Factura ID</th>
+                <th>Total</th>
+                <th>Fecha</th>
+                <!-- Agrega más columnas según las propiedades de tu modelo FacturaEnt -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var factura in Model)
+            {
+                <tr>
+                    <td>@factura.FacturaId</td>
+                    <td>@factura.Total</td>
+                    <td>@factura.Fecha</td>
+                    <!-- Agrega más celdas según las propiedades de tu modelo FacturaEnt -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No hay facturas para mostrar.</p>
+}

@@ -1,0 +1,85 @@
+﻿@model LN_WEB.Entities.PedidoEnt
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2 text-center">
+            <div class="breadcrumb-text">
+                <p> EL VARON</p>
+                <h2>Editar Pedido</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("EditarPedido", "Pedido", FormMethod.Post, new { id = "pedidoForm" }))
+{
+    <div class="row align-items-center justify-content-center">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-5">
+            <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                @if (ViewBag.MsjPantalla != null)
+                {
+                    <div style="text-align:center" class="alert alert-warning" role="alert">
+                        @ViewBag.MsjPantalla
+                    </div>
+                }
+
+                @Html.HiddenFor(m => m.OrderId)
+                <center>
+                    <div class="form-check form-switch mb-3" style="text-align:left">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="ParaLlevar" value="true" @(Model.ParaLlevar ? "checked" : "")>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Para Llevar</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.DropDownListFor(m => m.Estado, new List<SelectListItem>
+                        {
+                            new SelectListItem { Text = "Activo", Value = "true" },
+                            new SelectListItem { Text = "Inactivo", Value = "false" }
+                        }, new { @class = "form-control bg-white", id = "estadoDropdown" })
+                        <label for="floatingInput">Estado</label>
+                    </div>
+
+                    <button type="submit" id="submitButton" class="btn btn-outline-primary py-3 w-100 mb-4" disabled>Actualizar Datos</button>
+                </center>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    // Espera a que el DOM esté completamente cargado
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtén referencias a los elementos relevantes
+        var form = document.getElementById('pedidoForm');
+        var estadoDropdown = document.getElementById('estadoDropdown');
+        var submitButton = document.getElementById('submitButton');
+
+        // Obtén el estado actual del formulario
+        var originalFormState = JSON.stringify(Object.fromEntries(new FormData(form)));
+
+        // Función para habilitar el botón cuando se detecta un cambio
+        function habilitarBoton() {
+            submitButton.disabled = JSON.stringify(Object.fromEntries(new FormData(form))) === originalFormState;
+        }
+
+        // Escucha cambios en el dropdown
+        estadoDropdown.addEventListener('change', habilitarBoton);
+
+        // Escucha cambios en el formulario
+        form.addEventListener('input', habilitarBoton);
+
+        // Maneja el envío del formulario
+        form.addEventListener('submit', function (event) {
+            if (submitButton.disabled) {
+                // Si el botón está deshabilitado, cancela el envío del formulario
+                event.preventDefault();
+                // Devuelve a la página anterior
+                window.history.back();
+            }
+        });
+    });
+</script>

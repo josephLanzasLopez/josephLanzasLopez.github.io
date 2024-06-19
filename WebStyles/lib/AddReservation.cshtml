@@ -1,0 +1,110 @@
+﻿<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.css" />
+
+
+<style>
+    /* Estilo para el contenedor del calendario */
+    #calendar-container {
+        display: table;
+        justify-content: center;
+        align-items: center;
+        height: 70vh; /* 70% de la altura de la ventana */
+        width: 70%; /* 70% del ancho de la ventana */
+        margin: auto; /* Centrar en la pantalla */
+    }
+
+    /* Estilo para el calendario */
+    #calendar {
+        width: 100%; /* Ocupar todo el ancho del contenedor */
+        height: 100%; /* Ocupar todo el alto del contenedor */
+    }
+
+    .fc-unthemed td.fc-today {
+        background: #F28123;
+    }
+
+    a.fc-day-number {
+        color: black;
+    }
+
+    .fc-button-primary {
+        color: #fff;
+        background-color: #333;
+        border-color: #2C3E50;
+    }
+</style>
+
+
+<section id="hero" class="hero">
+    <button type="button" class="btn btn-primary" id="btnCrearCita" style="background-color: #333; border:none; color:#fff;">Crear Cita</button>
+    <a class="btn btn-success" id="btnMirarAgenda"style="background-color: #333; border:none" asp-controller="Reserva" asp-action="">Mirar Citas</a>
+    <hr />
+    <div id='calendar-container'>
+
+        <div id='calendar'></div>
+    </div>
+</section>
+
+
+
+<script>
+
+    //Jquery
+    $(function () {
+        ObtenerTareas();
+
+        $('#btnCrearCita').click(function () {
+            // Redirigir a la página de creación
+            window.location.href = '/Reservation/CheckMyReservations'; // Ajusta la ruta según la configuración de tu aplicación
+        });
+
+        $('#btnMirarAgenda').click(function () {
+            // Redirigir a la página de creación
+            window.location.href = '/Reservation/CheckReservations'; // Ajusta la ruta según la configuración de tu aplicación
+        });
+    });
+
+
+
+
+    function ObtenerTareas() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: ['interaction', 'dayGrid'],
+            header: {
+                left: 'prevYear,prev,next,nextYear today',
+                center: 'title',
+                right: 'dayGridMonth,dayGridWeek,dayGridDay'
+            },
+            navLinks: true,
+            eventLimit: true,
+            events: '/Reservation/ObtenerReservaciones',
+            eventClick: function (eventObj) {
+
+            }
+
+        });
+
+        calendar.render();
+    }
+
+
+    // Llamada a la función ObtenerCitas
+    ObtenerCitas();
+
+    function ObtenerCitas() {
+        $.ajax({
+            type: 'GET',
+            url: '/Reservation/ObtenerRe',  // Ajusta la ruta según tu configuración
+            success: function (data) {
+                console.log('Datos de citas:', data);
+            },
+            error: function (error) {
+                console.error('Error al obtener citas:', error);
+            }
+        });
+    }
+
+
+</script>

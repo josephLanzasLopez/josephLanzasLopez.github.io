@@ -1,0 +1,77 @@
+/* Estilos generales para todas las tablas */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+    .table th,
+    .table td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #6a243f; /* Color de los contornos */
+    }
+
+    .table th {
+        background-color: #6a243f; /* Color de la parte superior */
+        color: #fff;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #46bfa5; /* Color de fondo */
+    }
+
+    .table tbody tr:hover {
+        background-color: #fad593;
+    }
+
+    .table td:last-child {
+        text-align: center;
+    }
+
+/* Estilo para el contenedor de resultados de búsqueda */
+#searchResults {
+    background-color: #46bfa5; /* Color de fondo */
+}
+
+/* Hacer todas las tablas responsivas */
+@media (max-width: 768px) {
+    .table,
+    .table thead,
+    .table tbody,
+    .table th,
+    .table td,
+    .table tr {
+        display: block;
+    }
+
+        .table thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        .table tr {
+            border: 1px solid #6a243f;
+            margin-bottom: 10px;
+        }
+
+        .table td {
+            border: none;
+            border-bottom: 1px solid #6a243f;
+            position: relative;
+            padding-left: 50%;
+            text-align: left;
+        }
+
+            .table td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+}

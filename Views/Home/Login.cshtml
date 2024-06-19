@@ -1,0 +1,97 @@
+﻿@model LN_WEB.Entities.UsuarioEnt
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout - Login.cshtml";
+}
+
+<style>
+    body, h2, label, .form-control {
+        font-family: 'Roboto', sans-serif;
+        color: #dbdbdb;
+    }
+
+    .form-control {
+        background-color: #242424;
+        border: 1px solid #dbdbdb;
+        color: #dbdbdb;
+    }
+
+        .form-control::placeholder {
+            color: #242424;
+        }
+
+    .form-floating > label {
+        color: #dbdbdb;
+    }
+
+    .card {
+        background-color: #212529;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añadir sombra a la tarjeta */
+    }
+
+    /* Evitar cambiar el color del texto al seleccionar */
+    ::selection {
+        background: #4a4a4a; /* Color de fondo al seleccionar */
+        color: #dbdbdb; /* Color del texto al seleccionar */
+    }
+
+    /* Asegurar que el texto dentro de los inputs mantenga su color al seleccionar */
+    input::selection, textarea::selection {
+        background: #4a4a4a; /* Color de fondo al seleccionar */
+        color: #dbdbdb; /* Color del texto al seleccionar */
+    }
+
+    /* Evitar que el color del label cambie cuando se selecciona el texto en el input */
+    .form-floating > .form-control:focus ~ label {
+        color: #dbdbdb; /* Color del label cuando el input está en foco */
+    }
+</style>
+
+@using (Html.BeginForm("IniciarSesion", "Home", FormMethod.Post, new { id = "formLogin", onsubmit = "return validarFormulario(event);" }))
+{
+    <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-5">
+            <div class="card">
+                <div class="bg-light rounded p-5 p-sm-5 my-4 mx-3">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <div class="container">
+                            <div class="col-lg-8 offset-lg-2 text-center">
+                                <center>
+                                    <img src="~/images/LOGO.png" width="170" height="170" />
+                                    <h2 style="font-family: 'Lobster', cursive; color: #dbdbdb; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">La Catrina</h2>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (ViewBag.MsjPantalla != null)
+                    {
+                        <div style="text-align:center" class="alert alert-warning" role="alert">
+                            @ViewBag.MsjPantalla
+                        </div>
+                    }
+
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(m => m.CorreoElectronico, new { @type = "text", @class = "form-control", @placeholder = "correo@correo.com" })
+                        <label for="floatingInput">Correo Electrónico</label>
+                    </div>
+                    <div class="form-floating mb-4">
+                        @Html.TextBoxFor(m => m.Contrasenna, new { @type = "password", @class = "form-control", @placeholder = "Contraseña" })
+                        <label for="floatingPassword">Contraseña</label>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div class="form-check">
+                        </div>
+                        <a href="@Url.Action("Recuperar","Home")">Recuperar Contraseña</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary py-3 w-100 mb-5">Iniciar Sesión</button>
+                    <p class="text-center mb-0">Si no tiene una cuenta <a href="@Url.Action("Registro","Home")">Registrese</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/LoginScript.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

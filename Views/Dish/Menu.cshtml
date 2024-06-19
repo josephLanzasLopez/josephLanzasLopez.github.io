@@ -1,0 +1,108 @@
+﻿@model IEnumerable<LN_WEB.Entities.DishEnt>
+
+@{
+    ViewBag.Title = "Menu";
+}
+
+<style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2 text-center">
+            <div class="breadcrumb-text">
+                <h3 style="font-family: 'Lobster', cursive; color: #F28123; ">La Catrina</h3>
+                <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">¡Bienvenido a nuestro menú!</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+<div class="row">
+    @if (ViewBag.MsjPantalla != null)
+    {
+        <div style="text-align:center" class="alert alert-warning" role="alert">
+            @ViewBag.MsjPantalla
+        </div>
+    }
+
+    @foreach (var item in Model)
+
+    {
+        <div class="col-lg-3">
+
+
+            <div class="card" style="width: 100%;">
+
+                <img src="@item.Image" class="card-img-top" alt="..." width="200" height="200" />
+
+                <div class="card-body">
+                    <center>
+                        <h4 class="card-title stylish-title" style="font-family: 'Open Sans', sans-serif;">@item.Name</h4>
+                        <h5 class="card-text" style="font-family: 'Open Sans', sans-serif;">Precio: ₡ @item.Price</h5>
+
+                        <a style="background-color: #ffd469; " href="@Url.Action("AddDishCart","Carrito", new { q = item.IdDish })" class="btn btn-warning btn-custom">Añadir</a>
+                        <button style="background-color: #cfcfcf; "
+                                type="button" class="btn btn passingID btn-custom"
+                                data-name="@item.Name"
+                                data-img="@item.Image"
+                                data-desc="@item.Ingredients"
+                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Ver Más
+                        </button>
+                    </center>
+
+                </div>
+
+            </div>
+            <br /><br />
+        </div>
+
+    }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+
+                    <h2 id="txtName" class="text-center w-100 d-flex justify-content-center"></h2>
+
+
+                </h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #e8e8e8; ">
+                <img src="" alt="Plato" id="imgDish" style="width: 50%; height: auto;" />
+                <p id="txtDesc"></p>
+
+               
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="comments-link">
+                    
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+
+    $(".passingID").click(function () {
+        $("#txtName").text($(this).attr('data-name'));
+        $("#txtDesc").text($(this).attr('data-desc'));
+        $("#imgDish").attr('src', $(this).attr('data-img'));
+    });
+
+</script>

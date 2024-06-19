@@ -1,0 +1,62 @@
+@model IEnumerable<LN_WEB.Entities.FacturaEnt>
+
+@{
+    ViewBag.Title = "Factura";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2 text-center">
+            <div class="breadcrumb-text">
+                <p> EL VARON</p>
+                <h2>Mis Facturas</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+
+<div class="row">
+    <div class="col-12">
+
+        @if (ViewBag.MsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                @ViewBag.MsjPantalla
+            </div>
+        }
+
+       
+        else
+        {
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID Factura</th>
+                        <th>ID Usuario</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+
+                    </tr>
+                <thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="user-row">
+                            <td>@item.FacturaId</td>
+                            <td>@item.IdUsuario</td>
+                            <td>@item.Fecha</td>
+                            <td>@item.Total</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+
+    </div>
+</div>

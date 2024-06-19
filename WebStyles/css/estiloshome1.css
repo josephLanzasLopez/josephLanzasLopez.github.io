@@ -1,0 +1,17 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-size: cover;
+    background-color: red;
+}
+
+.card {
+    position: relative; /* Establece la tarjeta como un contenedor relativo */
+}
+
+.bottom-link {
+    position: absolute; /* Coloca el botón de manera absoluta dentro de la tarjeta */
+    bottom: 0; /* Alinea el botón al fondo de la tarjeta */
+    width: 100%; /* Asegura que el botón ocupe todo el ancho de la tarjeta */
+    text-align: center; /* Alinea el texto del botón al centro */
+    padding: 10px; /* Añade un poco de espacio alrededor del botón */
+}

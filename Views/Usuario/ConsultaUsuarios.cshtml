@@ -1,0 +1,123 @@
+﻿@model IEnumerable<LN_WEB.Entities.UsuarioEnt>
+
+@{
+    ViewBag.Title = "ConsultaUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <h3 style="font-family: 'Lobster', cursive; color: #F28123; ">La Catrina</h3>
+                    <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Usuarios Registrados</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <table id="showData" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Imagen</th>
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Estado</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.IdUsuario.ToString() != Session["IdUsuario"].ToString())
+                {
+                    <tr class="user-row">
+                        <td><img src="@item.Image" width="110px" height="110px" /></td>
+                        <td>@item.Identificacion</td>
+                        <td><strong>@item.Nombre</strong></td>
+                        <td>@item.CorreoElectronico</td>
+                        <td>@(item.Estado ? "Activo" : "Inactivo")</td>
+                        <td><a href="@Url.Action("Editar","Usuario", new { q = item.IdUsuario })"><i class="fa fa-pen" style="color: grey"></i></a></td>
+                        <td><button type="button" class="btn" onclick="RemoverUsuario(@item.IdUsuario, this)"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+
+
+    window.onload = function () {
+        AddTotal();
+
+    }
+
+
+
+    function RemoverUsuario(IdUsuario, element) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminarlo',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, procedemos con la eliminación
+                $.ajax({
+                    type: "POST",
+                    url: "/Usuario/RemoverUsuario",
+                    dataType: "json",
+                    data: {
+                        "q": IdUsuario
+                    },
+                    success: function (respuesta) {
+                        // Mostrar mensaje de éxito o redirigir a la página de consulta
+                        Swal.fire(
+                            'Eliminado',
+                            'El usuario ha sido eliminado correctamente',
+                            'success'
+                        ).then((result) => {
+                            // Redirigir a la página de consulta de usuarios
+                            window.location.href = "/Usuario/ConsultaUsuarios";
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.fire(
+                            'Error',
+                            'Hubo un error al eliminar el usuario',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#showData').dataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+            }
+        });
+    });
+</script>

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+    
+    
+}
+
+<!-- Incluir el archivo de estilos -->
+
+
+<body style="background: url('../../images/2.jpg')no-repeat;background-size:cover;">
+    <div class="container-card">
+        <div class="card">
+            <figure>
+                <img src="~/images/inicio-redes/REDES.jpeg" />
+            </figure>
+            <div class="contenido-card">
+                <h3 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">¿Quiénes somos?</h3>
+                <p>
+                    En El Varón, nuestra pasión es la gastronomía y la creación de experiencias culinarias inolvidables. Desde que abrimos nuestras puertas, nos hemos dedicado a ofrecer a nuestros comensales una experiencia única que combina sabores auténticos, hospitalidad excepcional y un ambiente acogedor.
+                </p>
+                <div class="bottom-link">
+                    <a href="@Url.Action("About", "Home")">Ver Más</a>
+                </div>
+                <br /><br />
+            </div>
+        </div>
+
+        <div class="card">
+            <figure>
+                <img src="~/images/inicio-redes/ceviches.png" />
+            </figure>
+            <div class="contenido-card">
+                <h3 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Menú</h3>
+                <p>¡Descubre la excelencia culinaria con nuestros deliciosos Ceviches! Nuestros expertos chefs combinan ingredientes frescos y sabrosos para crear una experiencia gastronómica única. Cada bocado es una explosión de sabores frescos y exquisitos. Sumérgete en la frescura y vive una aventura culinaria que despierta tus sentidos.</p>
+                <div class="bottom-link">
+                    <a href="@Url.Action("Menu", "Dish")">Ir al Menú</a>
+                </div>
+                <br /><br />
+            </div>
+        </div>
+
+        <div class="card">
+            <figure>
+                <img src="~/images/inicio-redes/facebook.jpg" />
+            </figure>
+            <div class="contenido-card">
+                <h3 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Ubicación</h3>
+                <p>Estamos ubicados en Turrialba. ¡Ven a visitarnos y disfruta de una experiencia gastronómica única en un ambiente acogedor!</p>
+                <div class="bottom-link">
+                    <a href="@Url.Action("Contacto", "Contacto")">Más Información</a>
+                </div>
+                <br /><br />
+            </div>
+        </div>
+    </div>
+  
+
+

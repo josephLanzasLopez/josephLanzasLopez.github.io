@@ -1,0 +1,87 @@
+﻿@model IEnumerable<LN_WEB.Entities.ReservationCartEnt>
+@{
+    ViewBag.Title = "Carrito de Reserva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-12">
+        @if (ViewBag.MsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                @ViewBag.MsjPantalla
+            </div>
+        }
+
+        @if (Model.Count() == 0)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                Aún no has agregado ningúna reserva
+            </div>
+
+        }
+
+        <table class="table table-hover" id="TableX">
+            <thead>
+                <tr>
+                    <th>IdReservationCart</th>
+                    <th>IdReservation</th>
+                    <th>IdUsuario</th>
+                    <th>RegistDate</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.IdReservationCart</td>
+                        <td>@item.IdReservation</td>
+                        <td>@item.IdUsuario</td>
+                        <td>@item.RegistDate</td>
+                        <td><button type="button" class="btn" onclick="RemoveCart(@item.IdReservationCart, this)"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <br />
+
+        using (Html.BeginForm("ConfirmReservationCart", "Reservation", FormMethod.Post))
+        {
+        <input style="width:280px" type="submit" value="Confirmar" class="btn btn-success">
+        }
+
+        }
+
+    </div>
+</div>
+
+<script>
+
+    window.onload = function () {
+        SumarTotal();
+
+    }
+
+    function RemoveCart(IdReservationCart, element) {
+
+        $.ajax({
+            type: "POST",
+            url: "/Curso/RemoverReservationCart",
+            dataType: "json",
+            data: {
+                "q": IdReservationCart
+            },
+            success: function (respuesta) {
+
+                window.location.href = "/Reservation/CheckReservation";
+
+            }
+        });
+
+    }
+
+</script>
